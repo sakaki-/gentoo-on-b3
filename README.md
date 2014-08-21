@@ -159,7 +159,6 @@ net-wireless/wireless-tools
 sys-apps/mlocate
 sys-apps/pciutils
 sys-fs/dosfstools
-sys-kernel/gentoo-sources:3.15.9
 sys-process/cronie
 ```
 
