@@ -20,7 +20,7 @@ configs/b3_sda3_root_config
   The .config used to build the kernel shipped in the
   /root/root-on-sda3-kernel directory of the USB image
 configs/b3_stock_config
-  The .config from a standard B3, on which the above two were based
+  The .config from a standard B3, on which the above three were based
 reference/fstab-on-b3
   The /etc/fstab to be used if installing onto the internal drive; has
   boot on /dev/sda1, swap on /dev/sda2, and root on /dev/sda3
