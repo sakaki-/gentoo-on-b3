@@ -24,15 +24,13 @@ else
     echo "/boot is already mounted, leaving it that way..."
 fi
 echo "Compiling kernel (${KNAME})..."
-make -j${NUMTHREADS} ARCH=arm CROSS_COMPILE=armv5tel-softfloat-linux-gnueabi- \
-  zImage
+make -j${NUMTHREADS} zImage
 echo "Compiling DTB..."
-make ARCH=arm CROSS_COMPILE=armv5tel-softfloat-linux-gnueabi- kirkwood-b3.dtb
+make kirkwood-b3.dtb
 echo "Compiling modules..."
-make -j${NUMTHREADS} ARCH=arm CROSS_COMPILE=armv5tel-softfloat-linux-gnueabi- \
-  modules
+make -j${NUMTHREADS} modules
 echo "Installing modules..."
-make ARCH=arm CROSS_COMPILE=armv5tel-softfloat-linux-gnueabi- modules_install
+make modules_install
 echo "Creating patched image for B3 (caches off, DTB appended)..."
 pushd arch/arm/boot
 # per https://lists.debian.org/debian-boot/2012/08/msg00804.html
