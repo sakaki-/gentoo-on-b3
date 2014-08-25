@@ -43,6 +43,7 @@ cat cache_head_patch zImage dts/kirkwood-b3.dtb > zImage-dts-appended
 rm cache_head_patch
 mkimage -A arm -O linux -T kernel -C none -a 0x00008000 -e 0x00008000 \
   -n "Gentoo ARM: ${KNAME}" -d zImage-dts-appended ../../../uImage
+rm zImage-dts-appended
 echo "Copying image to /boot/boot/uImage..."
 popd
 mkdir -p "/boot/boot"
