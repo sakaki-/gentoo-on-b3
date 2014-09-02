@@ -258,7 +258,7 @@ b3 ~ # mount /dev/sda3 /mnt/sdaroot
 b3 ~ # mkdir /mnt/sdaboot/boot
 b3 ~ # cp /root/root-on-sda3-kernel/uImage /mnt/sdaboot/boot/
 ```
-Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first sector (which is where we just copied it to, above).
+Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first partition (which is where we just copied it to, above).
 
 Next, we'll set up the `root` partition itself. The process below isn't quite what your mother would recommend ^-^, but it gets the job done (the first line may take some time to complete):
 ```
