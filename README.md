@@ -25,7 +25,7 @@ The original v1.0.0 images are still available [here](https://github.com/sakaki-
 To try this out, you will need:
 * A USB key of at least 4GB capacity. Unfortunately, not all USB keys work with the version of [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) on the B3 (2010.06 on my device). I have tested it successfully with SanDisk Cruzer 4GB and 8GB USB keys, but some larger devices (e.g. 32GB Verbatim keys) do not work.
 * An Excito B3 (obviously!). If it has an internal hard drive (i.e., it runs the standard Excito software), use the `genb3img.xz` image; if using a diskless chassis, use the `genb3disklessimg.xz` instead.
-* A PC to decompress the appropriate image and write it to the USB key. This is most easily done on a Linux machine of some sort, but tools are also available for Windows (see [here](http://tukaani.org/xz/) and [here](http://sourceforge.net/projects/win32diskimager/), for example). In the instructions below I'm going to assume you're using Linux.
+* A PC to decompress the appropriate image and write it to the USB key (of course, you can also use your B3 for this, assuming it is currently running the standard Excito / Debian Squeeze system). This is most easily done on a Linux machine of some sort, but tools are also available for Windows (see [here](http://tukaani.org/xz/) and [here](http://sourceforge.net/projects/win32diskimager/), for example). In the instructions below I'm going to assume you're using Linux.
 
 ## Downloading and Writing the Image
 
