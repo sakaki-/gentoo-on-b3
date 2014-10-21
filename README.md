@@ -299,6 +299,10 @@ Suppose you wish to build 3.16.1 (the same version as supplied in the image), us
 ```
 b3 ~ # emerge =gentoo-sources-3.16.1
    (this will take some time to complete, depending on your network connection)
+b3 ~ # eselect kernel list
+   (this will show a numbered list of available kernels)
+b3 ~ # eselect kernel set 1
+   (replace '1' in the above command with the number of the desired kernel from the list)
 b3 ~ # cd /usr/src/linux
 b3 linux # zcat /proc/config.gz > .config
 b3 linux # make olddefconfig
