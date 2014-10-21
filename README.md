@@ -310,6 +310,32 @@ The `/root/prep_arm_image_on_b3.sh` script script (supplied) will build the kern
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
+### Keeping Your Gentoo System Up-To-Date
+
+You can update your system at any time. To do so, first refresh your Portage tree, by issuing:
+```
+b3 ~ # eix-sync
+   (this will take some time to complete)
+```
+This is loosely equivalent to `apt-get update` on Debian. Next, download, compile and install any updated versions of packages you have, by issuing:
+```
+b3 ~ # emerge --ask --verbose --deep --with-bdeps=y --newuse --update @world
+   (enter 'y' and press <Enter> if prompted)
+```
+This is loosely equivalent to `apt-get upgrade` on Debian. 
+
+Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating your machine may take a number of hours, if many packages have changed.
+
+Once the `emerge` process has completed, it is usually prudent to issue:
+```
+b3 ~ # dispatch-conf
+```
+to deal with any config file clashes that may have been introduced by the upgrade process.
+
+> Note that the **kernel** build process for Gentoo is separate (see the previous section for details).
+
+For more information about Gentoo's package management, see [my notes here](https://wiki.gentoo.org/wiki/EFI_Gentoo_End_to_End_Install/Installing_the_Gentoo_Stage_3_Files#Gentoo.2C_Portage.2C_Ebuilds_and_emerge_.28Background_Reading.29). The parameters to `emerge` are explained [here](https://wiki.gentoo.org/wiki/EFI_Gentoo_End_to_End_Install/Building_the_Gentoo_Base_System_Minus_Kernel#world_update_params).
+
 ## Feedback Welcome!
 
 If you have any problems, questions or comments regarding this project, feel free to drop me a line! (sakaki@deciban.com)
