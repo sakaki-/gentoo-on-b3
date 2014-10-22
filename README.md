@@ -1,22 +1,22 @@
 # gentoo-on-b3
 
-Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 3.16.1
+Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 3.17.1
 
 ## Description
 
 <img src="https://wiki.gentoo.org/images/0/03/Excito_b3.jpg" alt="Excito B3" width="250px" align="right"/>
-This project contains a bootable, live-USB image for the Excito B3 miniserver. You can use it as a rescue disk, to play with Gentoo Linux, or as the starting point to install Gentoo Linux on your B3's main hard drive. You can even use it on a diskless B3. No soldering, compilation, or [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) flashing is required! You can run it without harming your B3's existing software; however, any changes you make while running the system *will* be saved to the USB (i.e., there is persistence). As of this v1.1.0, a number of useful software packages (web server, mail server etc.) are included precompiled with the image (in their 'freshly emerged' configuration state), for convenience.
+This project contains a bootable, live-USB image for the Excito B3 miniserver. You can use it as a rescue disk, to play with Gentoo Linux, or as the starting point to install Gentoo Linux on your B3's main hard drive. You can even use it on a diskless B3. No soldering, compilation, or [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) flashing is required! You can run it without harming your B3's existing software; however, any changes you make while running the system *will* be saved to the USB (i.e., there is persistence). A number of useful software packages (web server, mail server etc.) are included precompiled with the image (in their 'freshly emerged' configuration state), for convenience (with heartbleed and shellshock fixes applied).
 
-The kernel used in the image is **3.16.1** from gentoo-sources, with the necessary code to switch off the L2 cache (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
+The kernel used in the image is **3.17.1-r1** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
 
 The images may be downloaded from the links below (or via `wget`, per the following instructions). Most people will want to use the `genb3img.xz` variant - the diskless version should *only* be used if you have no drive installed in your B3; it will fail to boot on a standard system (and vice versa).
 
 Variant | Image | Digital Signature
 :--- | ---: | ---:
-B3 with Internal Drive | [genb3img.zx](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3img.xz) | [genb3img.zx.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3img.xz.asc)
-Diskless B3 | [genb3disklessimg.zx](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3disklessimg.xz) | [genb3disklessimg.zx.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3disklessimg.xz.asc)
+B3 with Internal Drive | [genb3img.zx](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3img.xz) | [genb3img.zx.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3img.xz.asc)
+Diskless B3 | [genb3disklessimg.zx](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3disklessimg.xz) | [genb3disklessimg.zx.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3disklessimg.xz.asc)
 
-The original v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases/tag/1.0.0).
+The original v1.1.0 and v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
 > Please read the instructions below before proceeding. Also please note that these images are provided 'as is' and without warranty.
 
@@ -31,14 +31,14 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3img.xz.asc
 ```
-to fetch the compressed disk image file (279MiB) and its signature.
+to fetch the compressed disk image file (285MiB) and its signature.
 > If you want the 'diskless' variant (because you have no internal hard drive in your B3), use:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3disklessimg.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.1.0/genb3disklessimg.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3disklessimg.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.2.0/genb3disklessimg.xz.asc
 ```
 instead.
 
@@ -71,7 +71,7 @@ instead.
 
 Substitute the actual USB key device path, for example `/dev/sdc`, for `/dev/sdX` in the above command. Make sure to reference the device, **not** a partition within it (so e.g., `/dev/sdc` and not `/dev/sdc1`; `/dev/sdd` and not `/dev/sdd1` etc.)
 
-The write may take some time, due to the decompression. It should exit cleanly when done - if you get a message saying 'No space left on device', then your USB key is too small for the image, and you should try again with a larger capacity one.
+The above `xzcat` to the USB key will take some time, due to the decompression (about 16 minutes on my machine). It should exit cleanly when done - if you get a message saying 'No space left on device', then your USB key is too small for the image, and you should try again with a larger capacity one.
 
 ## Specifying Required Network Settings
 
@@ -155,17 +155,17 @@ app-portage/gentoolkit-0.3.0.8-r2
 app-portage/mirrorselect-2.2.2
 dev-embedded/u-boot-tools-2014.01
 mail-mta/postfix-2.10.3
-net-dns/avahi-0.6.31-r2
+net-dns/avahi-0.6.31-r6
 net-firewall/iptables-1.4.21-r1
-net-fs/samba-3.6.23
+net-fs/samba-3.6.23-r1
 net-ftp/proftpd-1.3.5
 net-mail/dovecot-2.2.13-r1
 net-misc/bridge-utils-1.5
-net-misc/dhcpcd-6.4.3
+net-misc/dhcpcd-6.4.7
 net-misc/mediatomb-0.12.1-r8
 net-misc/minidlna-1.1.3
 net-misc/netifrc-0.2.2
-net-misc/openvpn-2.3.3
+net-misc/openvpn-2.3.4-r1
 net-wireless/hostapd-2.0-r1
 net-wireless/iw-3.10
 net-wireless/wireless-tools-30_pre9
@@ -179,7 +179,8 @@ www-servers/apache-2.2.27-r4
 
 plus of course the normal Gentoo `@system` set of tools. (The version numbers are Gentoo ebuilds, but they generally map 1-to-1 onto upstream package versions.)
 
-It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with packages updated on Thu 28 August 2014.
+It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with packages updated on Tue 21 October 2014.
+> Incidentially, the `@system` set in this release includes `app-shells/bash-4.2_p53`, which is patched against shellshock.
 
 The drivers for WiFi (if you have the hardware on your B3) *are* present, but configuration of WiFi in master mode (using hostapd) is beyond the scope of this short write up (see [here](http://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/) for some details). The relevant network service (`net.wlp1s0`) has been created on the image, but is not setup to run on boot. Similarly, the **lan** port (`eth1`) interface service exists on the image (`net.eth1`), but is also not setup to run on boot. Feel free to configure these as desired; see [this section](https://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=3#doc_chap3) of the Gentoo Handbook for details.
 
@@ -195,7 +196,7 @@ b3 ~ # reboot
 ```
 and your machine will cleanly restart back into your existing (Excito) system off the hard drive. At this point, you can remove the USB key if you like. You can then, at any later time, simply repeat the 'power up with USB key inserted and button pressed' process to come back into Gentoo - any changes you made will still be present on the USB key.
 
-Also, please note that there is no handler bound to the rear-button press events in the shipped system, so if you want to power off cleanly, issue: 
+Also, please note that there is no handler bound to the rear-button press events in the shipped system, so if you want to power off cleanly (rather than rebooting), issue: 
 ```
 b3 ~ # shutdown -P now
 ```
@@ -252,13 +253,12 @@ b3 ~ # mkfs.ext4 /dev/sda3
 Now, we need to copy the necessary system information. I have provided a second version of the kernel (in `root`'s home directory) that looks for its `root` partition on `/dev/sda3` (but is otherwise identical to the one on the USB key you booted off), so you need to copy that across:
 ```
 b3 ~ # mkdir /mnt/{sdaboot,sdaroot}
-b3 ~ # mount /boot
 b3 ~ # mount /dev/sda1 /mnt/sdaboot
 b3 ~ # mount /dev/sda3 /mnt/sdaroot
 b3 ~ # mkdir /mnt/sdaboot/boot
-b3 ~ # cp /root/root-on-sda3-kernel/uImage /mnt/sdaboot/boot/
+b3 ~ # cp /root/root-on-sda3-kernel/{uImage,config} /mnt/sdaboot/boot/
 ```
-Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first partition (which is where we just copied it to, above).
+Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first partition (which is where we just copied it (along with its `config`), by means of the last command, above).
 
 Next, we'll set up the `root` partition itself. The process below isn't quite what your mother would recommend ^-^, but it gets the job done (the first line may take some time to complete):
 ```
@@ -273,7 +273,7 @@ b3 ~ # cp /root/fstab-on-b3 /mnt/sdaroot/etc/fstab
 Finally, `sync` the filesystem, and unmount:
 ```
 b3 ~ # sync
-b3 ~ # umount -l /boot /mnt/{sdaboot,sdaroot}
+b3 ~ # umount -l /mnt/{sdaboot,sdaroot}
 b3 ~ # rmdir /mnt/{sdaboot,sdaroot}
 ```
 
@@ -295,9 +295,9 @@ Once logged in, feel free to configure your system as you like! Of course, if yo
 
 If you'd like to compile a kernel on your new system, you can do so easily. Note that you **must** use at least version 3.15 of the kernel, as this is when the B3's device-tree information (the `arch/arm/boot/dts/kirkwood-b3.dts` file discussed earlier) was integrated into the mainline. You should also only do this from an installation on the B3's internal drive, as it requires quite a bit of disk space.
 
-Suppose you wish to build 3.16.1 (the same version as supplied in the image), using the standard Gentoo-patched sources. Then you would issue:
+Suppose you wish to build 3.17.1-r1 (the same version as supplied in the image), using the standard Gentoo-patched sources. Then you would issue:
 ```
-b3 ~ # emerge =gentoo-sources-3.16.1
+b3 ~ # emerge =gentoo-sources-3.17.1-r1
    (this will take some time to complete, depending on your network connection)
 b3 ~ # eselect kernel list
    (this will show a numbered list of available kernels)
@@ -314,9 +314,11 @@ The `/root/prep_arm_image_on_b3.sh` script script (supplied) will build the kern
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
+> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.2.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.2.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
+
 ### Keeping Your Gentoo System Up-To-Date
 
-You can update your system at any time. To do so, first refresh your Portage tree, by issuing:
+You can update your system at any time (whether you are running Gentoo from USB or the B3's internal drive). To do so, first refresh your Portage tree, by issuing:
 ```
 b3 ~ # eix-sync
    (this will take some time to complete)
@@ -328,9 +330,9 @@ b3 ~ # emerge --ask --verbose --deep --with-bdeps=y --newuse --update @world
 ```
 This is loosely equivalent to `apt-get upgrade` on Debian. 
 
-Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating your machine may take a number of hours, if many packages have changed.
+Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating may take a number of hours, if many packages have changed.
 
-Once the `emerge` process has completed, it is usually prudent to issue:
+Once the `emerge` process has completed, it is prudent to issue:
 ```
 b3 ~ # dispatch-conf
 ```
