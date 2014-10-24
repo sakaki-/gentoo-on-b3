@@ -71,7 +71,7 @@ instead.
 
 Substitute the actual USB key device path, for example `/dev/sdc`, for `/dev/sdX` in the above command. Make sure to reference the device, **not** a partition within it (so e.g., `/dev/sdc` and not `/dev/sdc1`; `/dev/sdd` and not `/dev/sdd1` etc.)
 
-The above `xzcat` to the USB key will take some time, due to the decompression (about 16 minutes on my machine). It should exit cleanly when done - if you get a message saying 'No space left on device', then your USB key is too small for the image, and you should try again with a larger capacity one.
+The above `xzcat` to the USB key will take some time, due to the decompression (it takes between 5 and 16 minutes on my machine, depending on the USB key used). It should exit cleanly when done - if you get a message saying 'No space left on device', then your USB key is too small for the image, and you should try again with a larger capacity one.
 
 ## Specifying Required Network Settings
 
