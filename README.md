@@ -342,7 +342,7 @@ to deal with any config file clashes that may have been introduced by the upgrad
 
 > Note that the **kernel** build process for Gentoo is separate (see the previous section for details).
 
-For more information about Gentoo's package management, see [my notes here](https://wiki.gentoo.org/wiki/EFI_Gentoo_End_to_End_Install/Installing_the_Gentoo_Stage_3_Files#Gentoo.2C_Portage.2C_Ebuilds_and_emerge_.28Background_Reading.29). The parameters to `emerge` are explained [here](https://wiki.gentoo.org/wiki/EFI_Gentoo_End_to_End_Install/Building_the_Gentoo_Base_System_Minus_Kernel#world_update_params).
+For more information about Gentoo's package management, see [my notes here](https://wiki.gentoo.org/wiki/Sakaki's_EFI_Install_Guide/Installing_the_Gentoo_Stage_3_Files#Gentoo.2C_Portage.2C_Ebuilds_and_emerge_.28Background_Reading.29). The parameters to `emerge` are explained [here](https://wiki.gentoo.org/wiki/Sakaki's_EFI_Install_Guide/Building_the_Gentoo_Base_System_Minus_Kernel#world_update_params).
 
 ## Feedback Welcome!
 
