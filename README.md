@@ -143,7 +143,7 @@ If you have previously connected to a *different* machine with the *same* IP add
 
 ## Using Gentoo
 
-The supplied image contains a fully-configured Gentoo system (*not* simply a [minimal install](https://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=2#doc_chap2) or [stage 3](https://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=5#doc_chap2)), with a complete Portage tree already downloaded, so you can immediately perform `emerge` operations (Gentoo's equivalent of `apt-get`) etc. Be aware that, as shipped, it uses UK locale settings and timezone; however, these are easily changed if desired. See the [Gentoo Handbook](https://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=6#doc_chap4) for details.
+The supplied image contains a fully-configured Gentoo system (*not* simply a [minimal install](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media#Minimal_installation_CD) or [stage 3](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media#What_are_stages_then.3F)), with a complete Portage tree already downloaded, so you can immediately perform `emerge` operations (Gentoo's equivalent of `apt-get`) etc. Be aware that, as shipped, it uses UK locale settings and timezone; however, these are easily changed if desired. See the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Timezone) for details.
 
 The image has the following packages already in its `@world` set:
 > 
@@ -184,7 +184,7 @@ plus of course the normal Gentoo `@system` set of tools. (The version numbers ar
 It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with packages updated on Tue 21 October 2014.
 > Incidentially, the `@system` set in this release includes `app-shells/bash-4.2_p53`, which is patched against shellshock.
 
-The drivers for WiFi (if you have the hardware on your B3) *are* present, but configuration of WiFi in master mode (using hostapd) is beyond the scope of this short write up (see [here](http://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/) for some details). The relevant network service (`net.wlp1s0`) has been created on the image, but is not setup to run on boot. Similarly, the **lan** port (`eth1`) interface service exists on the image (`net.eth1`), but is also not setup to run on boot. Feel free to configure these as desired; see [this section](https://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=3#doc_chap3) of the Gentoo Handbook for details.
+The drivers for WiFi (if you have the hardware on your B3) *are* present, but configuration of WiFi in master mode (using hostapd) is beyond the scope of this short write up (see [here](http://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/) for some details). The relevant network service (`net.wlp1s0`) has been created on the image, but is not setup to run on boot. Similarly, the **lan** port (`eth1`) interface service exists on the image (`net.eth1`), but is also not setup to run on boot. Feel free to configure these as desired; see [this volume](https://wiki.gentoo.org/wiki/Handbook:AMD64#Gentoo_network_configuration) of the Gentoo Handbook for details.
 
 Once you have networking set up as you like it, you can issue:
 ```
