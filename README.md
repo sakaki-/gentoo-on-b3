@@ -221,7 +221,7 @@ b3 ~ # mkdir /mnt/{sdaboot,sdaroot}
 b3 ~ # mount /dev/sda1 /mnt/sdaboot
 b3 ~ # mount /dev/sda3 /mnt/sdaroot
 b3 ~ # mkdir /mnt/sdaboot/boot
-b3 ~ # cp /root/root-on-sda3-kernel/{uImage,config} /mnt/sdaboot/boot/
+b3 ~ # cp /root/root-on-sda3-kernel/{uImage,config,System.map} /mnt/sdaboot/boot/
 ```
 Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first partition (which is where we just copied it (along with its `config`), by means of the last command, above).
 
