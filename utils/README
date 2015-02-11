@@ -1,0 +1,6 @@
+Building the image is now handled by the buildkernel-b3 script.
+This is pre-installed on the image. Its source is at:
+  https://github.com/sakaki-/buildkernel-b3
+and it may be installed (on a PC, for example) via its ebuild, provided
+as part of the gentoo-b3 overlay:
+  https://github.com/sakaki-/gentoo-b3-overlay

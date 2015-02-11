@@ -10,34 +10,41 @@ README.md
   Brief description of the project, image installation and use
 configs/b3_live_usb_config
   The .config used to build the kernel on the boot partition of the
-  USB image (assumes you have an internal hard drive in your B3, the
-  most usual case); command line set to wait 5 seconds after boot, then
-  look for a root on /dev/sdb2
-configs/b3_live_usb_diskless_config
-  As above, but targeting the case where you have no internal drive in
-  your B3 (looks for root on /dev/sda2 instead)
+  USB image; command line set to wait 5 seconds after boot, then
+  look for a root on PARTUUID=05A8FC63-03
 configs/b3_sda3_root_config
   The .config used to build the kernel shipped in the
-  /root/root-on-sda3-kernel directory of the USB image
+  /root/root-on-sda3-kernel directory of the USB image (looks for a
+  root on /dev/sda3, and has no rootdelay)
 configs/b3_stock_config
   The .config from a standard B3, on which the above three were based
+reference/buildkernel-b3.pdf
+  A PDF of the manpage for the buildkernel-b3 utility (which replaces
+  the old prep_arm_image<...>.sh scripts)
 reference/fstab-on-b3
   The /etc/fstab to be used if installing onto the internal drive; has
   boot on /dev/sda1, swap on /dev/sda2, and root on /dev/sda3
 reference/fstab-on-live-usb
-  The /etc/fstab from the main USB image; has no swap, boot on /dev/sdb1,
-  and root on /dev/sdb2
-reference/fstab-on-live-usb-diskless
-  The /etc/fstab from the diskless USB image; has no swap, 
-  boot on /dev/sda1, and root on /dev/sda2
+  The /etc/fstab from the main USB image; has boot, swap and root
+  indexed by UUID
+reference/genup-lite.pdf
+  A PDF of the manpage for the genup-lite utility, which can be used
+  to keep your B3 Gentoo system up-to-date easily
+reference/installed-packages
+  Full list of installed packages, from eix-installed all; the version numbers
+  are Gentoo ebuilds, but they generally map 1-to-1 onto upstream versions
 reference/kirkwood-b3.dts
   Device tree description for the B3, lifted from
-  arch/arm/boot/dts/kirkwood-b3.dts in the 3.15.9 kernel source directory;
+  arch/arm/boot/dts/kirkwood-b3.dts in the 3.18.6 kernel source directory;
   this file describes the B3-specific hardware (such as LEDs) to the
   kernel; see the file /etc/init.d/bootled for an example of use
-utils/prep_arm_image.sh
-  Utility script used to build a B3 kernel when cross-compiling on a
-  Gentoo PC (executed in the top-level kernel source directory)
-utils/prep_arm_image_on_b3.sh
-  Utility script used to build a B3 kernel when compiling on the B3
-  itself (executed in the top level kernel source directory)
+reference/kirkwood-b3-live-usb.dts
+  As above, but slightly modified to turn the purple front LED on
+  during early boot (used in the current live-USB uImage)
+reference/showem-lite.pdf
+  A PDF of the manpage for the showem-lite utility, which allows parallel
+  Gentoo emerge runs to be easily monitored
+utils/README
+  A short explanation of what has happened to the prep_arm_image.sh
+  and prep_arm_image_on_b3.sh scripts (hint - they've been replaced by
+  buildkernel-b3)
