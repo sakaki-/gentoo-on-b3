@@ -288,7 +288,7 @@ Of course, you can easily adapt the above process, if you wish to use Gentoo's h
 
 It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *much* faster than doing it directly on the B3. Please see the instructions at the tail of this document.
 
-> If you do use `distcc` in this way, be aware that not all kernel files can be successfully built in this manner; a small number (particularly, at the start of the kernel build) may fall back to using local compilation. This is normal, and the vast majority of files *will* distribute OK.
+> Alternatively, if you set up `distcc` (also covered in the instructions below), an invocation of `buildkernel-b3` on your B3 will *automatically* offload kernel compilation workload to your PC. However, if you do use `distcc` in this way, be aware that not all kernel files can be successfully built in this manner; a small number (particularly, at the start of the kernel build) may fall back to using local compilation. This is normal, and the vast majority of files *will* distribute OK.
 
 ### Keeping Your Gentoo System Up-To-Date
 
