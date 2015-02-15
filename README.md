@@ -13,7 +13,7 @@ The image may be downloaded from the link below (or via `wget`, per the followin
 
 Variant | Image | Digital Signature
 :--- | ---: | ---:
-B3 with or without Internal Drive | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz) | [genb3img.zx.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz.asc)
+B3 with or without Internal Drive | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz.asc)
 
 The original v1.2.0-v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
