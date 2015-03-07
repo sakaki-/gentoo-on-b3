@@ -113,7 +113,7 @@ About 20 seconds after the LED turns green in step 3, above, you should be able 
 
 Once booted, you can log into the B3 from any other machine on your subnet (the root password is **gentoob3**). Issue:
 ```
-> ssh root@192.168.1.123
+$ ssh root@192.168.1.123
 The authenticity of host '192.168.1.123 (192.168.1.123)' can't be established.
 ED25519 key fingerprint is 0c:b5:1c:66:19:8a:dc:81:0e:dc:1c:f5:25:57:7e:66.
 Are you sure you want to continue connecting (yes/no)? <type yes and press Enter>
@@ -131,6 +131,8 @@ and you're in! Obviously, substitute the correct network address for your b3 in 
 ```
 
 If you have previously connected to a *different* machine with the *same* IP address as your B3 via `ssh` from the client PC, you may need to delete its host fingerprint (from `~/.ssh/known_hosts` on the PC) before `ssh` will allow you to connect.
+
+> As noted [later](#live-use-warning), please remember to change the image's `ssh` host keys before using it as an external visible server (should you intend to do this).
 
 ## Using Gentoo
 
@@ -254,7 +256,7 @@ b3 ~ #
 ```
 Of course, use whatever IP address you assigned earlier, rather than `192.168.1.123` in the above. Also, if you changed root's password in the USB image, use that new password rather than `gentoob3` in the above.
 
-Once logged in, feel free to configure your system as you like! Of course, if you're intending to use the B3 as an externally visible server, you should change the `ssh` host keys, change `root`'s password, install a firewall etc.
+Once logged in, feel free to configure your system as you like! <a name="live-use-warning"></a>Of course, if you're intending to use the B3 as an externally visible server, you should [change the `ssh` host keys](https://missingm.co/2013/07/identical-droplets-in-the-digitalocean-regenerate-your-ubuntu-ssh-host-keys-now/#how-to-generate-new-host-keys-on-an-existing-server), change `root`'s password, install a firewall etc.
 
 ### Recompiling the Kernel (Optional)
 
