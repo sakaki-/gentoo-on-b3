@@ -13,7 +13,7 @@ The image may be downloaded from the link below (or via `wget`, per the followin
 
 Variant | Image | Digital Signature
 :--- | ---: | ---:
-B3 with or without Internal Drive | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz.asc)
+B3 with or without Internal Drive | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc)
 
 The original v1.2.0-v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
@@ -32,8 +32,8 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.0/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc
 ```
 to fetch the compressed disk image file (349MiB) and its signature.
 
@@ -121,18 +121,9 @@ Warning: Permanently added '192.168.1.123' (ED25519) to the list of known hosts.
 Password: <type gentoob3 and press Enter>
 b3 ~ # 
 ```
-and you're in! Obviously, substitute the correct network address for your b3 in the command above (if you changed it in `/install/net`, earlier). Also, note that you may receive a different fingerprint type, depending on what your `ssh` client supports. The `ssh` host key fingerprints on the image are as follows:
-> 
-```
-1024 0a:39:60:54:ec:8c:7c:a0:3b:ab:74:f1:f9:b9:dd:dc  root@b3 (DSA)
- 256 0c:b5:1c:66:19:8a:dc:81:0e:dc:1c:f5:25:57:7e:66  root@b3 (ED25519)
-2048 59:2b:17:b4:2c:dd:3e:73:21:34:71:60:b7:b0:d3:07  root@b3 (RSA1)
-2048 a9:0c:8c:6e:57:bd:0c:a5:64:ef:47:94:40:c2:35:81  root@b3 (RSA)
-```
+and you're in! Obviously, substitute the correct network address for your b3 in the command above (if you changed it in `/install/net`, earlier). You may receive a different fingerprint type, depending on what your `ssh` client supports. Also, please note that as of version 1.3.1, the `ssh` host keys are generated on first boot (for security), and so the fingerprint you get will be different from that shown above.
 
 If you have previously connected to a *different* machine with the *same* IP address as your B3 via `ssh` from the client PC, you may need to delete its host fingerprint (from `~/.ssh/known_hosts` on the PC) before `ssh` will allow you to connect.
-
-> As noted [later](#live-use-warning), please remember to change the image's `ssh` host keys before using it as an external visible server (should you intend to do this).
 
 ## Using Gentoo
 
@@ -256,7 +247,7 @@ b3 ~ #
 ```
 Of course, use whatever IP address you assigned earlier, rather than `192.168.1.123` in the above. Also, if you changed root's password in the USB image, use that new password rather than `gentoob3` in the above.
 
-Once logged in, feel free to configure your system as you like! <a name="live-use-warning"></a>Of course, if you're intending to use the B3 as an externally visible server, you should [change the `ssh` host keys](https://missingm.co/2013/07/identical-droplets-in-the-digitalocean-regenerate-your-ubuntu-ssh-host-keys-now/#how-to-generate-new-host-keys-on-an-existing-server), change `root`'s password, install a firewall etc.
+Once logged in, feel free to configure your system as you like! Of course, if you're intending to use the B3 as an externally visible server, you should take the usual precautions, such as changing `root`'s password, configuring the firewall, possibly [changing the `ssh` host keys](https://missingm.co/2013/07/identical-droplets-in-the-digitalocean-regenerate-your-ubuntu-ssh-host-keys-now/#how-to-generate-new-host-keys-on-an-existing-server), etc.
 
 ### Recompiling the Kernel (Optional)
 
@@ -286,7 +277,7 @@ The `buildkernel-b3` script (supplied) will build the kernel and modules (includ
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
-> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.3.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.3.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
+> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.3.1 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.3.1/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
 
 It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *much* faster than doing it directly on the B3. Please see the instructions at the tail of this document.
 
