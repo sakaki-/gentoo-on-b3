@@ -273,7 +273,7 @@ b3 linux # buildkernel-b3 --custom-dts=/root/kirkwood-b3-live-usb.dts --usb --me
 ```
 The `buildkernel-b3` script (supplied) will build the kernel and modules (including L2-cache patch and device tree blob), and copy them to the appropriate directories for you (see its manpage [here](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/buildkernel-b3.pdf)). It will, by default, use your running kernel's config as a basis, and (if you specify `--menuconfig` when invoking it, as above), offer you the chance to modify the kernel configuration using the standard editor. Once completed, when you restart, you'll be using your new kernel!
 
-> Note - the command above use the `--custom-dts` option to `buildkernel-b3`, so that we can use the slightly modified device tree source (provided). This has been changed to turn the front LED purple during early boot. If you don't use it, the LED will turn off for around 20 seconds during the boot process. The underlying patch has been [submitted upstream](http://forum.mybubba.org/viewtopic.php?f=7&t=5680&start=15#p26825), so should hit the mainline kernel at some point.
+> Note - the command above uses the `--custom-dts` option to `buildkernel-b3`, so that we can reference the slightly modified device tree source (provided). This has been changed to turn the front LED purple during early boot. If you don't use it, the LED will turn off for around 20 seconds during the boot process. The underlying patch has been [submitted upstream](http://forum.mybubba.org/viewtopic.php?f=7&t=5680&start=15#p26825), so should hit the mainline kernel at some point.
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
