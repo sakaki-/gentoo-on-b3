@@ -253,10 +253,10 @@ Once logged in, feel free to configure your system as you like! Of course, if yo
 
 If you'd like to compile a kernel on your new system, you can do so easily (even if still running from the USB - it has sufficient free space). Note that you **must** use at least version 3.15 of the kernel, as this is when the B3's device-tree information (the `arch/arm/boot/dts/kirkwood-b3.dts` file discussed earlier) was integrated into the mainline.
 
-Suppose you wish to build 3.18.6 (the same version as supplied in the image), using the standard Gentoo-patched sources. Then you would issue:
+Suppose you wish to build the most modern version available using the standard Gentoo-patched sources. Then you would issue:
 ```
-b3 ~ # emerge =gentoo-sources-3.18.6
-   (this will take some time to complete, depending on your network connection)
+b3 ~ # emerge --ask --verbose gentoo-sources
+   (confirm when prompted; this will take some time to complete, depending on your network connection)
 b3 ~ # eselect kernel list
    (this will show a numbered list of available kernels)
 b3 ~ # eselect kernel set 1
@@ -290,7 +290,9 @@ You can update your system at any time (whether you are running Gentoo from USB 
 b3 ~ # genup-lite
    (this will take some time to complete)
 ```
-This is loosely equivalent to `apt-get update && apt-get upgrade` on Debian. See the [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup-lite.pdf) for full details of the process followed, and the options available for the command. 
+This is loosely equivalent to `apt-get update && apt-get upgrade` on Debian. See the [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup-lite.pdf) for full details of the process followed, and the options available for the command.
+
+> You _may_ need to build a kernel, using the earlier instructions, to allow all of the packages in the `@world` set to successfully update the first time (some packages inspect the contents of the `/usr/src/linux` directory when building, but the kernel source is not shipped with the current image, to reduce size).
 
 Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating may take a number of hours, if many packages have changed. However, `genup-lite` will automatically take advantage of distributed cross-compiling, using `distcc`, if you have that set up (see the next section for details).
 
