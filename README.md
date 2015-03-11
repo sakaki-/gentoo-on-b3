@@ -11,9 +11,9 @@ The kernel used in the image is **3.18.6** from gentoo-sources, with the necessa
 
 The image may be downloaded from the link below (or via `wget`, per the following instructions). (Incidentally, the image is now 'universal', and should work, without modification, whether your B3 has an internal hard drive fitted or not.)
 
-Variant | Image | Digital Signature
-:--- | ---: | ---:
-B3 with or without Internal Drive | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc)
+Variant | Version | Image | Digital Signature
+:--- | ---: | ---: | ---:
+B3 with or without Internal Drive | 1.3.1 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc)
 
 The original v1.2.0-v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
@@ -292,7 +292,11 @@ b3 ~ # genup-lite
 ```
 This is loosely equivalent to `apt-get update && apt-get upgrade` on Debian. See the [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup-lite.pdf) for full details of the process followed, and the options available for the command.
 
-> You _may_ need to build a kernel, using the earlier instructions, to allow all of the packages in the `@world` set to successfully update the first time (some packages inspect the contents of the `/usr/src/linux` directory when building, but the kernel source is not shipped with the current image, to reduce size).
+> **Erratum** - if you are using version 1.3.1 or 1.3.0 of the image, you need to edit the file `/etc/portage/package.accept_keywords`, and change the line citing the `bubba` repository so it reads:
+```
+*/*::bubba ~arm
+```
+If you do not, `genup-lite` may fail, trying to pull in `cryptodev-linux` when `openssl` is next updated. Users of versions >= 1.3.2 need take no action.
 
 Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating may take a number of hours, if many packages have changed. However, `genup-lite` will automatically take advantage of distributed cross-compiling, using `distcc`, if you have that set up (see the next section for details).
 
