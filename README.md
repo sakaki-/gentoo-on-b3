@@ -13,7 +13,7 @@ The image may be downloaded from the link below (or via `wget`, per the followin
 
 Variant | Version | Image | Digital Signature
 :--- | ---: | ---: | ---:
-B3 with or without Internal Drive | 1.3.1 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc)
+B3 with or without Internal Drive | 1.3.2 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.2/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.2/genb3img.xz.asc)
 
 The original v1.2.0-v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
@@ -32,8 +32,8 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.1/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.2/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.3.2/genb3img.xz.asc
 ```
 to fetch the compressed disk image file (349MiB) and its signature.
 
@@ -277,7 +277,7 @@ The `buildkernel-b3` script (supplied) will build the kernel and modules (includ
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
-> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.3.1 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.3.1/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
+> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.3.2 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.3.2/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
 
 It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *much* faster than doing it directly on the B3. Please see the instructions at the tail of this document.
 
