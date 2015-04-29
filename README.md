@@ -310,6 +310,8 @@ to deal with any config file clashes that may have been introduced by the upgrad
 
 For more information about Gentoo's package management, see [my notes here](https://wiki.gentoo.org/wiki/Sakaki's_EFI_Install_Guide/Installing_the_Gentoo_Stage_3_Files#Gentoo.2C_Portage.2C_Ebuilds_and_emerge_.28Background_Reading.29).
 
+> You may also find it useful to keep an eye on the 'Development' forum at [mybubba.org](http://forum.mybubba.org/index.php), as I occasionally post information about this live-USB there.
+
 ## Have your Gentoo PC Do the Heavy Lifting!
 
 The B3 does not have a particularly fast processor when compared to a modern PC. While this is fine when running the device in day-to-day mode (as a mailserver, for example), it does pose a bit of an issue with a source-based distribution like Gentoo, where you must compile packages to upgrade them. Everything works, but an upgrade of a significant package, like `boost`, can take many hours, which soon gets tiresome.
