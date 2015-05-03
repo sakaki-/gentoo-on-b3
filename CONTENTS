@@ -33,6 +33,12 @@ reference/genup-lite.pdf
 reference/installed-packages
   Full list of installed packages, from eix-installed all; the version numbers
   are Gentoo ebuilds, but they generally map 1-to-1 onto upstream versions
+reference/install_on_sda_gpt.sh
+  Simple script to install Gentoo onto the B3's internal HDD (optional);
+  this version uses a GPT partition table
+reference/install_on_sda.sh
+  Simple script to install Gentoo onto the B3's internal HDD (optional);
+  this version uses a DOS partition table
 reference/kirkwood-b3.dts
   Device tree description for the B3, lifted from
   arch/arm/boot/dts/kirkwood-b3.dts in the 3.18.6 kernel source directory;
