@@ -9,6 +9,8 @@ This project contains a bootable, live-USB image for the Excito B3 miniserver. Y
 
 The kernel used in the image is **4.0.1** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
 
+> The kernel has also had [this patch](http://www.spinics.net/lists/arm-kernel/msg413993.html) applied, to ensure PCIe (and therefore, WiFi) works correctly on the B3. This patch is working its way through the usual pipeline towards release, but (at the time of writing) has not yet hit the mainline kernel. Please see [here](http://forum.mybubba.org/viewtopic.php?f=7&t=5768) for further details.
+
 The image may be downloaded from the link below (or via `wget`, per the following instructions). (Incidentally, the image is now 'universal', and should work, without modification, whether your B3 has an internal hard drive fitted or not.)
 
 Variant | Version | Image | Digital Signature
@@ -168,71 +170,35 @@ Have fun! ^-^
 * The image now includes a 1GiB swap partition, and (since a minimum 8GB key is now required, rather than 4GB) also has sufficient space in its root partition to e.g., perform a kernel compilation, should you so desire.
 * If you have a USB key larger than the minimum 8GB, after writing the image you can easily extend the size of the second partition (using `fdisk` and `resize2fs`), so you have more space to work in. See [these instructions](http://geekpeek.net/resize-filesystem-fdisk-resize2fs/), for example.
 
-## Installing Gentoo on your B3's Internal Drive (Optional)
+## <a name="hdd_install">Installing Gentoo on your B3's Internal Drive (Optional)
 
 If you like Gentoo, and want to set it up permanently on the B3's internal hard drive, you can do so easily (it takes less than 5 minutes). The full process is described below. (Note, this is strictly optional, you can simply run Gentoo from the USB key, if you are just experimenting, or using it as a rescue system.)
 
-> **Warning** - the below process will wipe all existing software and data from your internal drive, so be sure to back that up first, before proceeding.
+> **Warning** - the below process will wipe all existing software and data from your internal drive, so be sure to back that up first, before proceeding. It will set up:
+* /dev/sda1 as a 64MiB boot partition, and format it `ext3`;
+* /dev/sda2 as a 1GiB swap partition;
+* /dev/sda3 as a root partition using the rest of the drive, and format it `ext4`.
 
-OK, first, boot into the image and then connect to your B3 via `ssh`, as described above. Then, configure the partition table on your hard drive, as described below (**warning** - this will delete all data and software on there, including your existing Excito system, so only proceed if you are sure). We'll make three partitions, for boot, swap and root (feel free to adopt a different scheme if you like; however, note that you will have to recompile your kernel unless targeting a `root` on `/dev/sda3`):
-```
-b3 ~ # fdisk /dev/sda
-<press o and Enter (to create a new disk label)>
-<press n and Enter (to create a new partition)>
-<press Enter (to make a primary partition)>
-<press Enter (to define partition 1)>
-<press Enter (to accept the default start location)>
-<type +64M and press Enter (to make a 64MiB sector, for boot)>
-<type a and press Enter (to turn the boot flag on)>
-<press n and Enter (to create a new partition)>
-<press Enter (to make a primary partition)>
-<press Enter (to define partition 2)>
-<press Enter (to accept the default start location)>
-<type +1G and press Enter (to make a 1GiB sector, for swap)>
-<type t and press Enter (to change the sector type)>
-<press Enter (to accept changing partition 2's type)>
-<type 82 and press Enter (to set the type as swap)>
-<type n and press Enter (to create a new partition)>
-<press Enter (to make a primary partition)>
-<press Enter (to define partition 3)>
-<press Enter (to accept the default start location)>
-<press Enter (to use all remaining space on the drive)>
-<type p and press Enter (to review the partition table)>
-<type w and press Enter (to write the table and exit)>
-```
+> Note also that the script [`/root/install_on_sda.sh`](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/install_on_sda.sh) will install using a DOS partition table (max 2TiB); if you'd rather use GPT, then use [`/root/install_on_sda_gpt.sh`](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/install_on_sda_gpt.sh) instead. [All B3s](http://forum.mybubba.org/viewtopic.php?f=7&t=5755) can boot from a GPT-partitioned drive; however, please note that if your HDD has a capacity > 2TiB, then only those B3s with a [relatively modern](http://forum.mybubba.org/viewtopic.php?f=9&t=5745) U-Boot will work correctly. The DOS partition table version should work for any size drive (but will be constrained to a maximum of 2TiB).
 
-Next, format the partitions (NB, do **not** use `ext4` for the boot partition (`/dev/sda1`), as U-Boot will not be able to read it):
+OK, first, boot into the image and then connect to your B3 via `ssh`, as described above. Then, (as of version 1.4.0) you can simply run the supplied script to install onto your hard drive:
 ```
-b3 ~ # mkfs.ext3 /dev/sda1
-b3 ~ # mkswap /dev/sda2
-b3 ~ # mkfs.ext4 /dev/sda3
-```
+b3 ~ # /root/install_on_sda.sh
+Install Gentoo -> /dev/sda (B3's internal HDD)
 
-Now, we need to copy the necessary system information. I have provided a second version of the kernel (in `root`'s home directory) that looks for its `root` partition on `/dev/sda3`, and has no `rootdelay` (but is otherwise identical to the one on the USB key you booted off), so you need to copy that across:
-```
-b3 ~ # mkdir /mnt/{sdaboot,sdaroot}
-b3 ~ # mount /dev/sda1 /mnt/sdaboot
-b3 ~ # mount /dev/sda3 /mnt/sdaroot
-b3 ~ # mkdir /mnt/sdaboot/boot
-b3 ~ # cp /root/root-on-sda3-kernel/{uImage,config,System.map} /mnt/sdaboot/boot/
-```
-Note that this kernel will be booted *without* the button pressed down, so it needs to live in the special path `/boot/uImage` on the first partition (which is where we just copied it (along with its `config`), by means of the last command, above).
+WARNING - will delete anything currently on HDD
+(including any existing Excito Debian system)
+Please make sure you have adequate backups before proceeding
 
-Next, we'll set up the `root` partition itself. The process below isn't quite what your mother would recommend ^-^, but it gets the job done (the first line may take some time to complete):
-```
-b3 ~ # cp -ax /bin /dev /etc /home /lib /root /sbin  /tmp /usr /var /mnt/sdaroot/
-b3 ~ # mkdir /mnt/sdaroot/{boot,media,mnt,opt,proc,run,sys}
-```
-
-Since we simply copied over the `/etc/fstab` file, it will be wrong; a valid copy (for the internal drive) is present in `root`'s home directory on the USB image. Copy it over now:
-```
-b3 ~ # cp /root/fstab-on-b3 /mnt/sdaroot/etc/fstab
-```
-Finally, `sync` the filesystem, and unmount:
-```
-b3 ~ # sync
-b3 ~ # umount -l /mnt/{sdaboot,sdaroot}
-b3 ~ # rmdir /mnt/{sdaboot,sdaroot}
+Type (upper case) INSTALL and press Enter to continue
+Any other entry quits without installing: <type INSTALL and press Enter, to proceed>
+Installing: check '/var/log/arch_install.log' in case of errors
+Step 1 of 5: creating partition table on /dev/sda...
+Step 2 of 5: formatting partitions on /dev/sda...
+Step 3 of 5: mounting boot and root partitions from /dev/sda...
+Step 4 of 5: copying system and bootfiles (please be patient)...
+Step 5 of 5: syncing filesystems and unmounting...
+All done! You can reboot into your new system now.
 ```
 
 That's it! You can now try rebooting your new system (it will have the same initial network settings as the USB version, since we've just copied them over). Issue:
