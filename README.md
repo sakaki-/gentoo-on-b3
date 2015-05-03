@@ -17,7 +17,7 @@ Variant | Version | Image | Digital Signature
 :--- | ---: | ---: | ---:
 B3 with or without Internal Drive | 1.4.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.4.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.4.0/genb3img.xz.asc)
 
-The original v1.2.0-v1.0.0 images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
+The older images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
 > Please read the instructions below before proceeding. Also please note that all images are provided 'as is' and without warranty.
 
