@@ -24,7 +24,7 @@ The older images are still available [here](https://github.com/sakaki-/gentoo-on
 ## Prerequisites
 
 To try this out, you will need:
-* A USB key of at least 8GB capacity (the *compressed* (.xz) image is 356MiB, the *uncompressed* image is 14,813,184 (512 byte) sectors = 7,584,350,208 bytes). Unfortunately, not all USB keys work with the version of [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) on the B3 (2010.06 on my device). Most SanDisk and Lexar USB keys appear to work reliably, but others (e.g., Verbatim keys) will not boot properly. (You may find the list of known-good USB keys [in this post](http://forum.doozan.com/read.php?2,1915,page=1) useful.)
+* A USB key of at least 8GB capacity (the *compressed* (.xz) image is 360MiB, the *uncompressed* image is 14,813,184 (512 byte) sectors = 7,584,350,208 bytes). Unfortunately, not all USB keys work with the version of [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) on the B3 (2010.06 on my device). Most SanDisk and Lexar USB keys appear to work reliably, but others (e.g., Verbatim keys) will not boot properly. (You may find the list of known-good USB keys [in this post](http://forum.doozan.com/read.php?2,1915,page=1) useful.)
 * An Excito B3 (obviously!). As of version 1.3.0, the *same* image will work both for the case where you have an internal hard drive in your B3 (the normal situation), *and* for the case where you are running a diskless B3 chassis.
 * A PC to decompress the image and write it to the USB key (of course, you can also use your B3 for this, assuming it is currently running the standard Excito / Debian Squeeze system). This is most easily done on a Linux machine of some sort, but tools are also available for Windows (see [here](http://tukaani.org/xz/) and [here](http://sourceforge.net/projects/win32diskimager/), for example). In the instructions below I'm going to assume you're using Linux.
 
@@ -37,7 +37,7 @@ On your Linux box, issue:
 # wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz
 # wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz.asc
 ```
-to fetch the compressed disk image file (356MiB) and its signature.
+to fetch the compressed disk image file (360MiB) and its signature.
 
 Next, if you like, verify the image using `gpg` (this step is optional):
 ```
