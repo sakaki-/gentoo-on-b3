@@ -1,23 +1,21 @@
 # gentoo-on-b3
 
-Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 4.0.1
+Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 4.1.6
 
 ## Description
 
 <img src="https://raw.githubusercontent.com/sakaki-/resources/master/excito/b3/Excito_b3.jpg" alt="Excito B3" width="250px" align="right"/>
 This project contains a bootable, live-USB image for the Excito B3 miniserver. You can use it as a rescue disk, to play with Gentoo Linux, or as the starting point to install Gentoo Linux on your B3's main hard drive. You can even use it on a diskless B3. No soldering, compilation, or [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) flashing is required! You can run it without harming your B3's existing software; however, any changes you make while running the system *will* be saved to the USB (i.e., there is persistence). A number of useful software packages (web server, mail server etc.) are included precompiled with the image (in their 'freshly emerged' configuration state), for convenience (with heartbleed, shellshock and Ghost fixes applied).
 
-The kernel used in the image is **4.0.1** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
-
-> The kernel has also had [this patch](http://www.spinics.net/lists/arm-kernel/msg413993.html) applied, to ensure PCIe (and therefore, WiFi) works correctly on the B3. This patch is working its way through the usual pipeline towards release, but (at the time of writing) has not yet hit the mainline kernel. Please see [here](http://forum.mybubba.org/viewtopic.php?f=7&t=5768) for further details.
+The kernel used in the image is **4.1.6** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
 
 The image may be downloaded from the link below (or via `wget`, per the following instructions). (Incidentally, the image is now 'universal', and should work, without modification, whether your B3 has an internal hard drive fitted or not.)
 
 Variant | Version | Image | Digital Signature
 :--- | ---: | ---: | ---:
-B3 with or without Internal Drive | 1.5.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz.asc)
+B3 with or without Internal Drive | 1.6.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.6.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.6.0/genb3img.xz.asc)
 
-The older images are still available [here](https://github.com/sakaki-/gentoo-on-b3/releases).
+The older images are still available (together with a short changelog) [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
 > Please read the instructions below before proceeding. Also please note that all images are provided 'as is' and without warranty.
 
@@ -34,8 +32,8 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.5.0/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.6.0/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.6.0/genb3img.xz.asc
 ```
 to fetch the compressed disk image file (360MiB) and its signature.
 
@@ -133,7 +131,7 @@ The supplied image contains a fully-configured Gentoo system (*not* simply a [mi
 
 The full set of packages in the image may be viewed [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/installed-packages) (note that the version numbers shown in this list are Gentoo ebuilds, but they generally map 1-to-1 onto upstream package versions).
 
-It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with all packages brought up to date against the Gentoo tree as of 24 May 2015. As such, heartbleed, shellshock and Ghost fixes have been applied.
+It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with all packages brought up to date against the Gentoo tree as of 27 August 2015. As such, heartbleed, shellshock and Ghost fixes have been applied.
 
 The drivers for WiFi (if you have the hardware on your B3) *are* present, but configuration of WiFi in master mode (using hostapd) is beyond the scope of this short write up (see [here](http://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/) for some details). The relevant network service (`net.wlp1s0`) has been created on the image, but is not setup to run on boot. Similarly, the **lan** port (`eth1`) interface service exists on the image (`net.eth1`), but is also not setup to run on boot. Feel free to configure these as desired; see [this volume](https://wiki.gentoo.org/wiki/Handbook:AMD64#Gentoo_network_configuration) of the Gentoo Handbook for details.
 
@@ -164,9 +162,9 @@ Have fun! ^-^
 * The specific B3 devices (LEDs, buzzer, rear button etc.) are now described by the file `arch/arm/boot/dts/kirkwood-b3.dts` in the main kernel source directory (and included in the [git archive too](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/kirkwood-b3.dts), for reference). You can see an example of using the defined devices in `/etc/init.d/bootled`, which turns on the green LED as Gentoo starts up, and back to purple again on shutdown (this replaces the previous [approach](http://wiki.mybubba.org/wiki/index.php?title=Let_your_B3_beep_and_change_the_LED_color), which required an Excito-patched kernel). Note that the USB image uses a slightly patched version of the DTS (available [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/kirkwood-b3-live-usb.dts)), to ensure that the front LED is purple during early boot.
 * The live USB works because the B3's firmware boot loader will automatically try to run a file called `/install/install.itb` from the first partition of the USB drive when the system is powered up with the rear button depressed. In the provided image, we have placed bootable kernel uImage in that location, with an internal command line set to `root=PARTUUID=05A8FC63-03 rootfstype=ext4 rootdelay=5 console=ttyS0,115200n8 earlyprintk`. Despite the name, no 'installation' takes place, of course!
 * The image is subscribed to the following overlays:
-  * [`sakaki-tools-lite`](https://github.com/sakaki-/sakaki-tools-lite): this provides the tools `showem-lite` ([source](https://github.com/sakaki-/showem-lite), [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/showem-lite.pdf)) and `genup-lite` ([source](https://github.com/sakaki-/genup-lite), [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup-lite.pdf)).
+  * [`sakaki-tools`](https://github.com/sakaki-/sakaki-tools): this provides the tools `showem` ([source](https://github.com/sakaki-/showem), [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/showem.pdf)) and `genup` ([source](https://github.com/sakaki-/genup), [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup.pdf)). (Note - these replace the old `showem-lite` and `genup-lite` tools.)
   * [`gentoo-b3`](https://github.com/sakaki-/gentoo-b3-overlay): this provides the `b3-init-scripts` package ([source](https://github.com/sakaki-/gentoo-b3-overlay/tree/master/sys-apps/b3-init-scripts/files)), a modern version of the `lzo` package ([upstream](http://www.oberhumer.com/opensource/lzo/download/); required because of an [alignment bug](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757037#32)), and the `buildkernel-b3` tool ([source](https://github.com/sakaki-/buildkernel-b3), [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/buildkernel-b3.pdf)).
-  * [`bubba`](https://github.com/gordonb3/bubba-overlay): this overlay (provided by Gordon) provides the `bubba-buttond` [ebuild](https://github.com/gordonb3/bubba-overlay/tree/master/sys-power/bubba-buttond) ([upstream](https://github.com/Excito/bubba-buttond)). It also provides ebuilds for the Logitech Media Server and Domoticz; these have not been installed in the image, but you can easily `emerge` them if you like (most of the prerequisites have been installed on the image already).
+  * [`bubba`](https://github.com/gordonb3/bubba-overlay): this overlay (provided by Gordon) provides the `bubba-buttond` [ebuild](https://github.com/gordonb3/bubba-overlay/tree/master/sys-power/bubba-buttond) ([upstream](https://github.com/Excito/bubba-buttond)). It also provides ebuilds for the Logitech Media Server and Domoticz; these have not been installed in the image, but you can easily `emerge` them if you like (most of the prerequisites have been installed on the image already). Please note that you will need to add any desired `bubba` packages to `/etc/portage/package.unmask/...` explicitly (as they are now masked by default, via `/etc/portage/package.mask/bubba-repo`, to avoid issues with auto-replacement of system packages such as `sys-apps/sysvinit`).
 * The image now includes a 1GiB swap partition, and (since a minimum 8GB key is now required, rather than 4GB) also has sufficient space in its root partition to e.g., perform a kernel compilation, should you so desire.
 * If you have a USB key larger than the minimum 8GB, after writing the image you can easily extend the size of the second partition (using `fdisk` and `resize2fs`), so you have more space to work in. See [these instructions](http://geekpeek.net/resize-filesystem-fdisk-resize2fs/), for example.
 
@@ -243,7 +241,7 @@ The `buildkernel-b3` script (supplied) will build the kernel and modules (includ
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
-> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.5.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.5.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
+> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.6.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.6.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
 
 It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *much* faster than doing it directly on the B3. Please see the instructions at the tail of this document.
 
@@ -251,22 +249,16 @@ It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *muc
 
 ### Keeping Your Gentoo System Up-To-Date
 
-You can update your system at any time (whether you are running Gentoo from USB or the B3's internal drive). As there are quite a few steps involved to do this correctly on Gentoo, I have provided a convenience script, `genup-lite` to do this as part of the image. So, to update your system, simply issue:
+You can update your system at any time (whether you are running Gentoo from USB or the B3's internal drive). As there are quite a few steps involved to do this correctly on Gentoo, I have provided a convenience script, `genup` to do this as part of the image. So, to update your system, simply issue:
 ```
-b3 ~ # genup-lite
+b3 ~ # genup
    (this will take some time to complete)
 ```
-This is loosely equivalent to `apt-get update && apt-get upgrade` on Debian. See the [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup-lite.pdf) for full details of the process followed, and the options available for the command.
+This is loosely equivalent to `apt-get update && apt-get upgrade` on Debian. See the [manpage](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/genup.pdf) for full details of the process followed, and the options available for the command.
 
-> **Erratum** - if you are using version 1.3.1 or 1.3.0 of the image, you need to edit the file `/etc/portage/package.accept_keywords`, and change the line citing the `bubba` repository so it reads:
-```
-*/*::bubba ~arm
-```
-If you do not, `genup-lite` may fail, trying to pull in `cryptodev-linux` when `openssl` is next updated. Users of versions >= 1.3.2 need take no action.
+Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating may take a number of hours, if many packages have changed. However, `genup` will automatically take advantage of distributed cross-compiling, using `distcc`, if you have that set up (see the next section for details).
 
-Note that because Gentoo is a source-based distribution, and the B3 is not a particularly fast machine, updating may take a number of hours, if many packages have changed. However, `genup-lite` will automatically take advantage of distributed cross-compiling, using `distcc`, if you have that set up (see the next section for details).
-
-When the update has completed, if promped to do so by `genup-lite`, then issue:
+When the update has completed, if promped to do so by `genup`, then issue:
 ```
 b3 ~ # dispatch-conf
 ```
@@ -286,7 +278,7 @@ However, there is a solution to this, and it is not as scary as it sounds - leve
 
 For example, you can cross-compile kernels for your B3 on your PC very quickly (around 5-15 minutes from scratch), by using Gentoo's [`crossdev`](http://gentoo-en.vfose.ru/wiki/Crossdev) tool. See my full instructions [here](https://github.com/sakaki-/gentoo-on-b3/wiki/Set-Up-Your-Gentoo-PC-for-Cross-Compilation-with-crossdev) and [here](https://github.com/sakaki-/gentoo-on-b3/wiki/Build-a-B3-Kernel-on-your-crossdev-PC) on this project's [wiki](https://github.com/sakaki-/gentoo-on-b3/wiki).
 
-Should you setup crossdev on your PC in this manner, you can then take things a step further, by leveraging your PC as a `distcc` server (instructions [here](https://github.com/sakaki-/gentoo-on-b3/wiki/Set-Up-Your-crossdev-PC-for-Distributed-Compilation-with-distcc) on the wiki). Then, with just some simple configuration changes on your B3 (see [these notes](https://github.com/sakaki-/gentoo-on-b3/wiki/Set-Up-Your-B3-as-a-distcc-Client)), you can distribute C/C++ compilation (and header preprocessing) to your remote machine, which makes system updates a *lot* quicker (and the provided tools [`genup-lite`](https://github.com/sakaki-/genup-lite) and [`buildkernel-b3`](https://github.com/sakaki-/buildkernel-b3) will automatically take advantage of this distributed compilation ability, if available).
+Should you setup crossdev on your PC in this manner, you can then take things a step further, by leveraging your PC as a `distcc` server (instructions [here](https://github.com/sakaki-/gentoo-on-b3/wiki/Set-Up-Your-crossdev-PC-for-Distributed-Compilation-with-distcc) on the wiki). Then, with just some simple configuration changes on your B3 (see [these notes](https://github.com/sakaki-/gentoo-on-b3/wiki/Set-Up-Your-B3-as-a-distcc-Client)), you can distribute C/C++ compilation (and header preprocessing) to your remote machine, which makes system updates a *lot* quicker (and the provided tools [`genup`](https://github.com/sakaki-/genup) and [`buildkernel-b3`](https://github.com/sakaki-/buildkernel-b3) will automatically take advantage of this distributed compilation ability, if available).
 
 ## Feedback Welcome!
 

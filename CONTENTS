@@ -27,8 +27,8 @@ reference/fstab-on-b3
 reference/fstab-on-live-usb
   The /etc/fstab from the main USB image; has boot, swap and root
   indexed by UUID
-reference/genup-lite.pdf
-  A PDF of the manpage for the genup-lite utility, which can be used
+reference/genup.pdf
+  A PDF of the manpage for the genup utility, which can be used
   to keep your B3 Gentoo system up-to-date easily
 reference/installed-packages
   Full list of installed packages, from eix-installed all; the version numbers
@@ -47,8 +47,8 @@ reference/kirkwood-b3.dts
 reference/kirkwood-b3-live-usb.dts
   As above, but slightly modified to turn the purple front LED on
   during early boot (used in the current live-USB uImage)
-reference/showem-lite.pdf
-  A PDF of the manpage for the showem-lite utility, which allows parallel
+reference/showem.pdf
+  A PDF of the manpage for the showem utility, which allows parallel
   Gentoo emerge runs to be easily monitored
 utils/README
   A short explanation of what has happened to the prep_arm_image.sh
