@@ -27,7 +27,7 @@ app-misc/ca-certificates-20140927.3.17.2
 app-misc/editor-wrapper-4
 app-misc/mime-types-9
 app-misc/pax-utils-1.0.3
-app-misc/screen-4.0.3-r6
+app-misc/screen-4.3.1
 app-portage/eix-0.30.4
 app-portage/euses-2.5.9
 app-portage/gentoolkit-0.3.0.9-r2
@@ -36,7 +36,7 @@ app-portage/layman-2.0.0-r3
 app-portage/mirrorselect-2.2.2-r2
 app-portage/portage-utils-0.56
 app-portage/showem-1.0.1-r1
-app-shells/bash-4.3_p33-r2
+app-shells/bash-4.3_p39
 app-shells/push-1.6
 app-text/build-docbook-catalog-1.19.1
 app-text/docbook-xml-dtd-4.1.2-r6
@@ -78,14 +78,15 @@ dev-libs/iniparser-3.1-r1
 dev-libs/libaio-0.3.110
 dev-libs/libassuan-2.1.1
 dev-libs/libdaemon-0.14-r2
-dev-libs/libev-4.15-r1
+dev-libs/libev-4.19
+dev-libs/libevent-2.0.22
 dev-libs/libffi-3.0.13-r1
-dev-libs/libgcrypt-1.5.4-r1
-dev-libs/libgpg-error-1.13
+dev-libs/libgcrypt-1.6.3-r4
+dev-libs/libgpg-error-1.19
 dev-libs/libksba-1.3.3
 dev-libs/libltdl-2.4.6
 dev-libs/libmcrypt-2.5.8-r2
-dev-libs/libnl-3.2.25
+dev-libs/libnl-3.2.26
 dev-libs/libpcre-8.36
 dev-libs/libpipeline-1.4.0
 dev-libs/libtasn1-4.5
@@ -99,7 +100,7 @@ dev-libs/mpfr-3.1.2_p10
 dev-libs/nettle-2.7.1-r4
 dev-libs/nspr-4.10.8
 dev-libs/oniguruma-5.9.5
-dev-libs/openssl-1.0.1p
+dev-libs/openssl-1.0.2d
 dev-libs/popt-1.16-r2
 dev-libs/pth-2.0.7-r3
 dev-perl/Authen-SASL-2.160.0-r1
@@ -115,6 +116,7 @@ dev-perl/Net-SMTP-SSL-1.10.0-r1
 dev-perl/Net-SSLeay-1.650.0-r1
 dev-perl/PlRPC-0.202.0-r2
 dev-perl/SGMLSpm-1.03-r7
+dev-perl/Socket6-0.250.0
 dev-perl/TermReadKey-2.300.200-r1
 dev-perl/Test-Deep-0.110.0-r2
 dev-perl/Text-CharWidth-0.40.0-r1
@@ -186,12 +188,13 @@ net-dns/avahi-0.6.31-r8
 net-dns/dnsmasq-2.72-r2
 net-dns/libidn-1.30
 net-firewall/iptables-1.4.21-r1
+net-firewall/shorewall-4.6.11
 net-fs/cifs-utils-6.1-r1
 net-fs/samba-3.6.25
 net-ftp/ftpbase-0.01-r2
 net-ftp/proftpd-1.3.5a
 net-libs/c-client-2007f-r4
-net-libs/gnutls-3.3.15
+net-libs/gnutls-3.3.17.1
 net-libs/libpcap-1.7.4
 net-mail/dovecot-2.2.16-r1
 net-mail/mailbase-1.1
@@ -202,6 +205,7 @@ net-misc/iputils-20121221-r1
 net-misc/mediatomb-0.12.2_pre20150118-r1
 net-misc/minidlna-1.1.4
 net-misc/netifrc-0.2.2
+net-misc/ntp-4.2.8_p3
 net-misc/openssh-6.9_p1-r2
 net-misc/openvpn-2.3.7
 net-misc/rsync-3.1.1
@@ -234,6 +238,7 @@ sys-apps/gawk-4.0.2
 sys-apps/gentoo-functions-0.10
 sys-apps/grep-2.21-r1
 sys-apps/groff-1.22.2
+sys-apps/haveged-1.9.1
 sys-apps/help2man-1.46.6
 sys-apps/hwids-20150129
 sys-apps/hwinfo-21.4
@@ -242,7 +247,7 @@ sys-apps/kbd-1.15.5-r1
 sys-apps/keyutils-1.5.9-r1
 sys-apps/kmod-20
 sys-apps/less-478
-sys-apps/man-db-2.6.6
+sys-apps/man-db-2.7.2
 sys-apps/man-pages-4.00
 sys-apps/man-pages-posix-2013a
 sys-apps/mlocate-0.26-r1
@@ -265,6 +270,7 @@ sys-devel/autoconf-2.69
 sys-devel/autoconf-wrapper-13
 sys-devel/autogen-5.18.1
 sys-devel/automake-1.11.6-r1
+sys-devel/automake-1.14.1
 sys-devel/automake-1.15
 sys-devel/automake-wrapper-10
 sys-devel/bc-1.06.95-r1
@@ -273,7 +279,7 @@ sys-devel/binutils-config-4-r2
 sys-devel/bison-2.4.3
 sys-devel/distcc-3.1-r10
 sys-devel/flex-2.5.39-r1
-sys-devel/gcc-4.8.4
+sys-devel/gcc-4.8.5
 sys-devel/gcc-config-1.7.3
 sys-devel/gettext-0.19.4
 sys-devel/gnuconfig-20150308
@@ -287,13 +293,13 @@ sys-fs/mtd-utils-1.5.0
 sys-fs/udev-216
 sys-fs/udev-init-scripts-27
 sys-kernel/buildkernel-b3-1.0.3
-sys-kernel/linux-headers-4.1
+sys-kernel/linux-headers-4.2
 sys-libs/cracklib-2.9.1-r1
 sys-libs/db-4.8.30-r2
 sys-libs/e2fsprogs-libs-1.42.13
 sys-libs/gdbm-1.11
 sys-libs/glibc-2.20-r2
-sys-libs/libcap-2.22-r2
+sys-libs/libcap-2.24-r2
 sys-libs/libcap-ng-0.7.7
 sys-libs/ncurses-6.0-r1
 sys-libs/pam-1.2.1
