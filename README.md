@@ -81,7 +81,7 @@ $ ssh root@b3
 The authenticity of host 'b3 (192.168.50.1)' can't be established.
 ED25519 key fingerprint is 0c:b5:1c:66:19:8a:dc:81:0e:dc:1c:f5:25:57:7e:66.
 Are you sure you want to continue connecting (yes/no)? <type yes and press Enter>
-Warning: Permanently added '192.168.50.1' (ED25519) to the list of known hosts.
+Warning: Permanently added 'b3,192.168.50.1' (ED25519) to the list of known hosts.
 Password: <type gentoob3 and press Enter>
 b3 ~ # 
 ```
