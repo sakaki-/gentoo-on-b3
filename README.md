@@ -91,7 +91,7 @@ and you're in! You may receive a different fingerprint type, depending on what y
 
 If you have previously connected to a *different* machine with the *same* IP address as your B3 via `ssh` from the client PC, you may need to delete its host fingerprint (from `~/.ssh/known_hosts` on the PC) before `ssh` will allow you to connect.
 
-> Incidentially, you should also be able to browse the web etc. from your client (assuming that you connected the B3's `wan` port prior to boot), because the image has a forwarding `shorewall` firewall setup, as of version 1.7.0.
+> Incidentally, you should also be able to browse the web etc. from your client (assuming that you connected the B3's `wan` port prior to boot), because the image has a forwarding `shorewall` firewall setup, as of version 1.7.0.
 
 ## Using Gentoo
 
