@@ -1,19 +1,19 @@
 # gentoo-on-b3
 
-Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 4.1.6
+Bootable live-USB of Gentoo Linux for the Excito B3 miniserver, with Linux 4.3.0
 
 ## Description
 
 <img src="https://raw.githubusercontent.com/sakaki-/resources/master/excito/b3/Excito_b3.jpg" alt="Excito B3" width="250px" align="right"/>
 This project contains a bootable, live-USB image for the Excito B3 miniserver. You can use it as a rescue disk, to play with Gentoo Linux, or as the starting point to install Gentoo Linux on your B3's main hard drive. You can even use it on a diskless B3. No soldering, compilation, or [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) flashing is required! You can run it without harming your B3's existing software; however, any changes you make while running the system *will* be saved to the USB (i.e., there is persistence). A number of useful software packages (web server, mail server etc.) are included precompiled with the image (in their 'freshly emerged' configuration state), for convenience (with heartbleed, shellshock and Ghost fixes applied).
 
-The kernel used in the image is **4.1.6** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
+The kernel used in the image is **4.3.0** from gentoo-sources, with the necessary code to temporarily switch off the L2 cache in early boot (per [this link](https://lists.debian.org/debian-boot/2012/08/msg00804.html)) prepended, and the kirkwood-b3 device tree blob appended. The `.config` used for the kernel may be found [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/configs/b3_live_usb_config) in the git archive.
 
 The image may be downloaded from the link below (or via `wget`, per the following instructions). (Incidentally, the image is now 'universal', and should work, without modification, whether your B3 has an internal hard drive fitted or not.)
 
 Variant | Version | Image | Digital Signature
 :--- | ---: | ---: | ---:
-B3 with or without Internal Drive | 1.7.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.7.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.7.0/genb3img.xz.asc)
+B3 with or without Internal Drive | 1.8.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.8.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/1.8.0/genb3img.xz.asc)
 
 The older images are still available (together with a short changelog) [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
@@ -22,7 +22,7 @@ The older images are still available (together with a short changelog) [here](ht
 ## Prerequisites
 
 To try this out, you will need:
-* A USB key of at least 8GB capacity (the *compressed* (.xz) image is 372MiB, the *uncompressed* image is 14,813,184 (512 byte) sectors = 7,584,350,208 bytes). Unfortunately, not all USB keys work with the version of [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) on the B3 (2010.06 on my device). Most SanDisk and Lexar USB keys appear to work reliably, but others (e.g., Verbatim keys) will not boot properly. (You may find the list of known-good USB keys [in this post](http://forum.doozan.com/read.php?2,1915,page=1) useful.)
+* A USB key of at least 8GB capacity (the *compressed* (.xz) image is 383MiB, the *uncompressed* image is 14,813,184 (512 byte) sectors = 7,584,350,208 bytes). Unfortunately, not all USB keys work with the version of [U-Boot](http://www.denx.de/wiki/U-Boot/WebHome) on the B3 (2010.06 on my device). Most SanDisk and Lexar USB keys appear to work reliably, but others (e.g., Verbatim keys) will not boot properly. (You may find the list of known-good USB keys [in this post](http://forum.doozan.com/read.php?2,1915,page=1) useful.)
 * An Excito B3 (obviously!). As of version 1.3.0, the *same* image will work both for the case where you have an internal hard drive in your B3 (the normal situation), *and* for the case where you are running a diskless B3 chassis.
 * A PC to decompress the image and write it to the USB key (of course, you can also use your B3 for this, assuming it is currently running the standard Excito / Debian Squeeze system). This is most easily done on a Linux machine of some sort, but tools are also available for Windows (see [here](http://tukaani.org/xz/) and [here](http://sourceforge.net/projects/win32diskimager/), for example). In the instructions below I'm going to assume you're using Linux.
 
@@ -32,8 +32,8 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.7.0/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.7.0/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.8.0/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/1.8.0/genb3img.xz.asc
 ```
 to fetch the compressed disk image file (372MiB) and its signature.
 
@@ -67,7 +67,7 @@ Begin with your B3 powered off and the power cable removed. Insert the USB key i
 
 > The image uses a solid green LED as its 'normal' state, so that you can easily tell at a glance whether your B3 is running an Excito/Debian system (blue LED) or a Gentoo one (green LED).
 
-About 20 seconds after the LED turns green in step 3, above, you should be able to log in, via `ssh`, per the following instructions.
+About 60 seconds after the LED turns green in step 3, above, you should be able to log in, via `ssh`, per the following instructions.
 
 ## Connecting to the B3
 
@@ -99,7 +99,7 @@ The supplied image contains a fully-configured Gentoo system (*not* simply a [mi
 
 The full set of packages in the image may be viewed [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/installed-packages) (note that the version numbers shown in this list are Gentoo ebuilds, but they generally map 1-to-1 onto upstream package versions).
 
-It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with all packages brought up to date against the Gentoo tree as of 12 September 2015. As such, heartbleed, shellshock and Ghost fixes have been applied.
+It is based on the 5 June 2014 stage 3 release and minimal install system from Gentoo (armv5tel), with all packages brought up to date against the Gentoo tree as of 8 November 2015. As such, heartbleed, shellshock and Ghost fixes have been applied.
 
 The initial networking setup of the live-USB is as follows (patterned on the setup laid out in my Gentoo wiki page [here](https://wiki.gentoo.org/wiki/Ethernet_plus_WiFi_Bridge_Router_and_Firewall)):
 
@@ -214,7 +214,7 @@ The `buildkernel-b3` script (supplied) will build the kernel and modules (includ
 
 Of course, you can easily adapt the above process, if you wish to use Gentoo's hardened sources etc.
 
-> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.7.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.7.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
+> Please note that there was a major re-organization of the Marvell architecture in version 3.17 of the kernel, with [mach-kirkwood being removed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ba364fc752daeded072a5ef31e43b84cb1f9e5fd). As a result, the required format of the config file changed signficantly (for the B3), such that a simple `make olddefconfig` on a < 3.17 kernel config will no longer generate a bootable kernel. As such, if building a >= 3.17 kernel, you should use the [v1.8.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.8.0/configs) from this project as a basis (as these have the new schema); however, if building 3.15 <= x < 3.17, use the [v1.1.0 configs](https://github.com/sakaki-/gentoo-on-b3/tree/1.1.0/configs) instead. Versions < 3.15 do not have device-tree support for the B3, and should not be used.
 
 It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *much* faster than doing it directly on the B3. Please see the instructions at the tail of this document.
 
