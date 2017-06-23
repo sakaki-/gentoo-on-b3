@@ -1,0 +1,70 @@
+#!/bin/busybox sh
+# Attempt to mount boot partition and source KSCRIPT within it.
+# Copyright (c) 2016 sakaki <sakaki@deciban.com>
+# License: GPL 3.0+
+# NO WARRANTY
+
+# Simple init script to source /boot/kexec.sh
+# (the sourced script should setup and then kexec -e the final
+# target kernel)
+# If the specified partition cannot be found, starts recovery console
+
+BOOT_DESC="UUID=EED5-410D"
+DELAY=5
+# We will try and exec the following script on the boot partition
+KSCRIPT="/boot/kexec.sh"
+
+show_red_led() {
+    # turn off green and blue LEDs
+    echo -n 0 > /sys/class/leds/bubba3\:green\:programming/brightness
+    echo -n 0 > /sys/class/leds/bubba3\:blue\:active/brightness
+    # turn on the red (error) LED
+    cat /sys/class/leds/bubba3\:red\:error/max_brightness > \
+        /sys/class/leds/bubba3\:red\:error/brightness
+}
+
+start_mini_udev() {
+    echo "Starting mini udev..."
+    echo "/sbin/mdev" > /proc/sys/kernel/hotplug
+    mdev -s
+}
+
+error_exit() {
+    # light the red led
+    show_red_led
+    echo "Starting recovery shell on serial console..." >&2
+    exec /bin/busybox sh -i
+}
+
+# Mount the /proc and /sys filesystems.
+/bin/busybox mount -t proc none /proc
+/bin/busybox mount -t sysfs none /sys
+/bin/busybox mount -t devpts none /dev/pts
+
+# ensure all symlinks are present
+/bin/busybox --install -s
+
+# start udev
+start_mini_udev
+sleep "${DELAY}"
+
+echo "Trying to locate partition ${BOOT_DESC}..."
+if ! BOOT_PATH="$(findfs "${BOOT_DESC}")"; then
+    echo "Error - could not find ${BOOT_DESC}!" >&2
+    error_exit
+fi
+echo "Mounting boot filesystem (read only)..."
+if ! mount -o ro "${BOOT_PATH}" /boot; then
+    echo "Error - failed to mount ${BOOT_PATH}!" >&2
+    error_exit
+fi
+if [ -f "${KSCRIPT}" ]; then
+    echo "Sourcing ${KSCRIPT}..."
+    source "${KSCRIPT}"
+else
+    echo "Error - ${KSCRIPT} not found!" >&2
+    error_exit
+fi
+# should not get here, KSCRIPT should have kexec'd a new kernel
+echo "Error - ${KSCRIPT} has returned!" >&2
+error_exit

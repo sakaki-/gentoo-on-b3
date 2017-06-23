@@ -1,58 +1,85 @@
 The following is a brief description of the files in the project:
 
 .gitignore
-  Specifies files to ignore under the git version control system
+  Specifies files to ignore under the git version control system.
 CONTENTS
-  This file
+  This file.
 COPYING
-  GPL 3.0 license text
+  GPL 3.0 license text.
 README.md
-  Brief description of the project, image installation and use
-configs/b3_live_usb_config
+  Brief description of the project, image installation and use.
+configs/usb_interstitial_config
   The .config used to build the kernel on the boot partition of the
-  USB image; command line set to wait 5 seconds after boot, then
-  look for a root on PARTUUID=05A8FC63-03
-configs/b3_sda3_root_config
+  USB image; essentially a glorified bootloader, whose job is to run kexec.sh
+  (which will load and kexec the 'real' kernel).
+configs/b3_interstitial_config
   The .config used to build the kernel shipped in the
-  /root/root-on-sda3-kernel directory of the USB image (looks for a
-  root on /dev/sda3, and has no rootdelay)
+  /root/root-on-sda3-kernel directory of the USB image; similar to the above,
+  but specifies a different initramfs. (You can grab a tarball of the
+  two initramfs from the project releases page on GitHub.)
+configs/b3_baseline_config
+  The baseline .config used when autobuilding the 'real' kernel zImage
+  (for which please see the gentoo-b3-kernel GitHub project, and also its
+  corresponding sys-kernel/gentoo-b3-kernel-bin package in the
+  gentoo-b3-overlay GitHub project).
 configs/b3_stock_config
   The .config from a standard B3, on which the above three were based
+  (way back when ^-^).
 reference/buildkernel-b3.pdf
   A PDF of the manpage for the buildkernel-b3 utility (which replaces
   the old prep_arm_image<...>.sh scripts)
 reference/fstab-on-b3
-  The /etc/fstab to be used if installing onto the internal drive; has
-  boot on /dev/sda1, swap on /dev/sda2, and root on /dev/sda3
+  The /etc/fstab used when installing to HDD; has boot, swap and root on
+  /dev/sda{1,2,3}. /boot is mounted by default now.
 reference/fstab-on-live-usb
   The /etc/fstab from the main USB image; has boot, swap and root
-  indexed by UUID
+  indexed by UUID. /boot is mounted by default now.
 reference/genup.pdf
   A PDF of the manpage for the genup utility, which can be used
-  to keep your B3 Gentoo system up-to-date easily
+  to keep your B3 Gentoo system up-to-date easily.
 reference/installed-packages
   Full list of installed packages, from eix-installed all; the version numbers
   are Gentoo ebuilds, but they generally map 1-to-1 onto upstream versions
-reference/install_on_sda_gpt.sh (REMOVED)
-  Simple script to install Gentoo onto the B3's internal HDD (optional);
-  this version uses a GPT partition table
-  NB this is now removed, as it is supplied from the gentoo-b3 overlay
-reference/install_on_sda.sh (REMOVED)
-  Simple script to install Gentoo onto the B3's internal HDD (optional);
-  this version uses a DOS partition table
-  NB this is now removed, as it is supplied from the gentoo-b3 overlay
-reference/kirkwood-b3.dts
-  Device tree description for the B3, lifted from
-  arch/arm/boot/dts/kirkwood-b3.dts in the 3.18.6 kernel source directory;
+reference/interstitial-init-on-b3
+  The init script run from the interstitial (bootloader) kernel when deployed
+  onto HDD; the main job of which is to locate and mount the boot partition
+  and source the kexec.sh script therein.
+reference/interstitial-init-on-live-usb
+  Ditto, but used by the intersitital kernel on the live-USB; the
+  difference is how the /boot partition is located (here, by UUID).
+reference/kexec-on-b3.sh
+  The sourced kexec script when booting from HDD. It will load and patch the
+  kernel (assumed to be a vanilla zImage), load the DTB, load the initramfs
+  (if supplied), then boot the kernel using kexec. Contains an editable kernel
+  command line which specifies root as /dev/sda3. No boot delay.
+reference/kexec-on-live-usb.sh
+  The sourced kexec script when booting from USB. It will load and patch the
+  kernel (assumed to be a vanilla zImage), load the DTB, load the initramfs
+  (if supplied), then boot the kernel using kexec. Contains an editable kernel
+  command line which specifies root by UUID, so it will work even in a
+  diskless chassis. 5 seconds boot delay.
+reference/kirkwood-b3.dt{b,s}.
+  Device tree source (and compiled device tree blob) for the B3, lifted from
+  arch/arm/boot/dts/kirkwood-b3.dts in the 4.11.5 kernel source directory;
   this file describes the B3-specific hardware (such as LEDs) to the
-  kernel; see the file /etc/init.d/bootled for an example of use
-reference/kirkwood-b3-live-usb.dts
+  kernel; see the file /etc/init.d/bootled for an example of use.
+reference/kirkwood-b3-earlyled.dt{b,s}
   As above, but slightly modified to turn the purple front LED on
-  during early boot (used in the current live-USB uImage)
+  during early boot; used in the current live-USB image to avoid having a
+  long gap where the front LED is off, when kexec-ing the 'real' kernel.
+reference/porthash.pdf
+  A PDF of the manpage for the porthash utility, which allows a signed
+  "master" hash of a Portage repo to be created or verified; useful when
+  distributing a snapshot via an unauthenticated channel, such as rsync.
+reference/setethermac
+  The simple boot-time OpenRC service used to ensure that the B3's ethernet
+  interfaces have the correct MACs set (because, if the kernel was
+  kexec-booted, the MACs will initally both be be 0, and networking will not
+  start unless this is corrected).
 reference/showem.pdf
   A PDF of the manpage for the showem utility, which allows parallel
-  Gentoo emerge runs to be easily monitored
+  Gentoo emerge runs to be easily monitored.
 utils/README
   A short explanation of what has happened to the prep_arm_image.sh
   and prep_arm_image_on_b3.sh scripts (hint - they've been replaced by
-  buildkernel-b3)
+  buildkernel-b3).

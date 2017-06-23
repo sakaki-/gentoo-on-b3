@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+# Ensure that the B3's ethernet interfaces have the correct MACs set
+# (because, if the kernel was kexec-booted, the MACs will initally
+# both be be 0, and networking will not start unless this is corrected)
+# Copyright (c) 2017 sakaki <sakaki@deciban.com>
+# License: GPL 3.0+
+# NO WARRANTY
+
+depend() {
+        need localmount
+        before net
+}
+
+start() {
+        ebegin "Starting setethermac on eth0 and eth1"
+        ip link set dev eth0 address $(fw_printenv ethaddr|rev|cut -c -17|rev)
+        ip link set dev eth1 address $(fw_printenv eth1addr|rev|cut -c -17|rev)
+        eend $?
+}
