@@ -36,14 +36,14 @@ To try this out, you will need:
 ## Downloading and Writing the Image
 
 On your Linux box, issue:
-```
+```console
 # wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.0.0/genb3img.xz
 # wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.0.0/genb3img.xz.asc
 ```
 to fetch the compressed disk image file (376MiB) and its signature.
 
 Next, if you like, verify the image using `gpg` (this step is optional):
-```
+```console
 # gpg --keyserver pool.sks-keyservers.net --recv-key DDE76CEA
 # gpg --verify genb3img.xz.asc genb3img.xz
 ```
@@ -54,7 +54,7 @@ Next, insert (into your Linux box) the USB key on which you want to install the 
 
 > **Warning** - this will *destroy* all existing data on the target drive, so please double-check that you have the path correct!
 
-```
+```console
 # xzcat genb3img.xz > /dev/sdX && sync
 ```
 
@@ -84,7 +84,7 @@ Once booted, you can log into the B3 as follows.
 First, connect your client PC (or Mac etc.) to the **lan** Ethernet port of your B3 (you can use a regular Ethernet cable for this, the B3's ports are autosensing). Alternatively, if you have a WiFi enabled B3, you can connect to the "b3" WiFi network which should now be visible (the passphrase is **changeme**).
 
 Then, on your client PC, issue:
-```
+```console
 $ ssh root@b3
 The authenticity of host 'b3 (192.168.50.1)' can't be established.
 ED25519 key fingerprint is 0c:b5:1c:66:19:8a:dc:81:0e:dc:1c:f5:25:57:7e:66.
@@ -121,7 +121,7 @@ Feel free to change this as desired; see [this volume](https://wiki.gentoo.org/w
 Note that the initial setup assumes you have a DHCP server on your network (on your ADSL router etc.). However, even if you do not (or have not hooked up your **wan** Ethernet port on boot), you *should* still be able to log in to your B3 (via the `lan` port, or, if available, over WiFi). You can then specify appropriate networking settings in `/etc/conf.d/net` for the `wan` port (`eth0`). Having done so, ensure the `wan` port is connected, and issue (as root) `/etc/init.d/net.eth0 restart` to bring the interface up.
 
 When you are done using your Gentoo system, you can simply issue:
-```
+```console
 b3 ~ # reboot
 ```
 and your machine will cleanly restart back into your existing (Excito) system off the hard drive. At this point, you can remove the USB key if you like. You can then, at any later time, simply repeat the 'power up with USB key inserted and button pressed' process to come back into Gentoo - any changes you made will still be present on the USB key. This makes for an easy way to migrate across gradually to Gentoo if you like, without having to disrupt your normal Excito Debian setup (which you can always just reboot back into at any time).
@@ -129,7 +129,7 @@ and your machine will cleanly restart back into your existing (Excito) system of
 To power off cleanly (rather than rebooting), you have two options. First, as the image includes Tor's [bubba-buttond](https://github.com/Excito/bubba-buttond) (courtesy of Gordon's [ebuild](https://github.com/sakaki-/gentoo-b3-overlay/tree/master/sys-power/bubba-buttond), migrated into the [gentoo-b3 overlay](https://github.com/sakaki-/gentoo-b3-overlay) as of version 2.0.0), you can simply press the B3's rear button for around 5 seconds, then release it (just as you would on a regular Excito system). The front LED will turn from green to purple after around 20 seconds, then turn off once it is safe to physically remove the power cable.
 
 Second, if you'd rather use the command line, you can issue: 
-```
+```console
 b3 ~ # poweroff-b3
 ```
 which will have the same effect (and follow the same power-down LED sequence).
@@ -179,7 +179,7 @@ If you like Gentoo, and want to set it up permanently on the B3's internal hard 
 > Note also that the script [`/root/install_on_sda.sh`](https://github.com/sakaki-/gentoo-b3-overlay/blob/master/sys-apps/b3-init-scripts/files/install_on_sda.sh-3) will install using a DOS partition table (max 2TiB); if you'd rather use GPT, then use [`/root/install_on_sda_gpt.sh`](https://github.com/sakaki-/gentoo-b3-overlay/blob/master/sys-apps/b3-init-scripts/files/install_on_sda_gpt.sh-3) instead. [All B3s](http://forum.mybubba.org/viewtopic.php?f=7&t=5755) can boot from a GPT-partitioned drive; however, please note that if your HDD has a capacity > 2TiB, then only those B3s with a [relatively modern](http://forum.mybubba.org/viewtopic.php?f=9&t=5745) U-Boot will work correctly. The DOS partition table version should work for any size drive (but will be constrained to a maximum of 2TiB).
 
 OK, first, boot into the image and then connect to your B3 via `ssh`, as described above. Then, (as of version 1.4.0) you can simply run the supplied script to install onto your hard drive:
-```
+```console
 b3 ~ # /root/install_on_sda.sh
 Install Gentoo -> /dev/sda (B3's internal HDD)
 
@@ -199,12 +199,12 @@ All done! You can reboot into your new system now.
 ```
 
 That's it! You can now try rebooting your new system (it will have the same initial network settings as the USB version, since we've just copied them over). Issue:
-```
+```console
 b3 ~ # reboot
 ```
 And let the system shut down and come back up. **Don't** press the B3's back-panel button this time. The system should boot directly off the hard drive. You can now remove the USB key, if you like, as it's no longer needed. Wait 60 seconds or so, then from your PC on the same subnet issue:
-```
-> ssh root@b3
+```console
+$ ssh root@b3
 Password: <type gentoob3 and press Enter>
 b3 ~ # 
 ```
@@ -219,7 +219,7 @@ As shipped, the image uses the [gentoo-b3-kernel-bin](https://github.com/sakaki-
 However, if you'd like to compile your *own* kernel for your new system (for example, to set specific config options), you can do so easily (even if still running from the USB - it has sufficient free space). Note that you **must** use at least version 3.15 of the kernel, as this is when the B3's device-tree information (the `arch/arm/boot/dts/kirkwood-b3.dts` file discussed earlier) was integrated into the mainline.
 
 Suppose you wish to build the most modern version available using the standard Gentoo-patched sources. Then you would issue:
-```
+```console
 b3 ~ # emerge --ask --verbose gentoo-sources
    (confirm when prompted; this will take some time to complete, depending on your network connection)
 b3 ~ # eselect kernel list
@@ -229,11 +229,11 @@ b3 ~ # eselect kernel set 1
 b3 ~ # cd /usr/src/linux
 ```
 Now remove the provided binary kernel (if you have not already done so):
-```
+```console
 b3 linux # emerge --unmerge gentoo-b3-kernel-bin
 ```
 Next, whether running Gentoo from your B3's internal hard drive or live-USB, issue:
-```
+```console
 b3 linux # buildkernel-b3 --menuconfig --zimage
 ```
 The `buildkernel-b3` script (supplied) will build the kernel, modules and device tree blob, and copy them to the appropriate directories for you (see its manpage [here](https://github.com/sakaki-/gentoo-on-b3/raw/master/reference/buildkernel-b3.pdf)). It will, by default, use your running kernel's config as a basis, and (if you specify `--menuconfig` when invoking it, as above), offer you the chance to modify the kernel configuration using the standard editor. Once completed, when you restart, you'll be using your new kernel!
@@ -253,7 +253,7 @@ It is also possible to cross-compile a kernel on your (Gentoo) PC, which is *muc
 ## <a name="genup">Keeping Your Gentoo System Up-To-Date
 
 You can update your system at any time (whether you are running Gentoo from USB or the B3's internal drive). As there are quite a few steps involved to do this correctly on Gentoo, I have provided a convenience script, `genup` to do this as part of the image. So, to update your system, simply issue:
-```
+```console
 b3 ~ # genup
    (this will take some time to complete)
 ```
@@ -268,7 +268,7 @@ As of version 2.0.0, the live-USB will attempt to use binary packages from the b
 > Even with the binhost backing, be aware that a full `genup` run will take around an hour to complete on your B3 (due to time taken by `rsync`, `Portage`'s dependency tree processing etc.).
 
 When the update has completed, if promped to do so by `genup`, then issue:
-```
+```console
 b3 ~ # dispatch-conf
 ```
 to deal with any config file clashes that may have been introduced by the upgrade process.
