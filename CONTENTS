@@ -21,7 +21,13 @@ configs/b3_baseline_config
   The baseline .config used when autobuilding the 'real' kernel zImage
   (for which please see the gentoo-b3-kernel GitHub project, and also its
   corresponding sys-kernel/gentoo-b3-kernel-bin package in the
-  gentoo-b3-overlay GitHub project).
+  gentoo-b3-overlay GitHub project). Note that the kernel version shown in
+  this file will be _lower_ than the version shipped on any (modern)
+  version of the image.
+configs/b3_shipped_config
+  The config of the 'real' kernel shipped on the current image. Note that
+  this kernel is provided by a binary package on the image, and so may
+  be updated during a future genup run.
 configs/b3_stock_config
   The .config from a standard B3, on which the above three were based
   (way back when ^-^).
