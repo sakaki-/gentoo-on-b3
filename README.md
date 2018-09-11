@@ -18,7 +18,7 @@ The image may be downloaded from the link below (or via `wget`, per the followin
 
 Variant | Version | Image | Digital Signature
 :--- | ---: | ---: | ---:
-B3 with or without Internal Drive | 2.1.0 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.0/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.0/genb3img.xz.asc)
+B3 with or without Internal Drive | 2.1.1 | [genb3img.xz](https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.1/genb3img.xz) | [genb3img.xz.asc](https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.1/genb3img.xz.asc)
 
 The older images are still available (together with a short changelog) [here](https://github.com/sakaki-/gentoo-on-b3/releases).
 
@@ -37,10 +37,10 @@ To try this out, you will need:
 
 On your Linux box, issue:
 ```console
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.0/genb3img.xz
-# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.0/genb3img.xz.asc
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.1/genb3img.xz
+# wget -c https://github.com/sakaki-/gentoo-on-b3/releases/download/2.1.1/genb3img.xz.asc
 ```
-to fetch the compressed disk image file (376MiB) and its signature.
+to fetch the compressed disk image file (364MiB) and its signature.
 
 Next, if you like, verify the image using `gpg` (this step is optional):
 ```console
@@ -115,8 +115,6 @@ The initial networking setup of the live-USB is as follows (patterned on the set
 
 Feel free to change this as desired; see [this volume](https://wiki.gentoo.org/wiki/Handbook:AMD64#Gentoo_network_configuration) of the Gentoo Handbook for further details.
 > If you have used previous versions of this live-USB, please note that the initial networking setup has changed. There is no need to specify the `/install/net` or `/install/resolv.conf` files, and the `copynetsetup` service is now disabled.
-
-> Please be aware that, because the image uses `kexec` to boot the [gentoo-b3-kernel](https://github.com/sakaki-/gentoo-b3-kernel), the MACs of the ethernet adaptors (`eth0` and `eth1`) are *not* set by U-Boot, but by the `setethermac` service (see the file `/etc/init.d/setethermac`, viewable [here](https://github.com/sakaki-/gentoo-on-b3/blob/master/reference/setethermac)). Accordingly, if you add a `udev` rule to change the names of these interfaces, their MACs will not be correctly initialized, and you may be unable to connect; so please don't do that ^-^
 
 Note that the initial setup assumes you have a DHCP server on your network (on your ADSL router etc.). However, even if you do not (or have not hooked up your **wan** Ethernet port on boot), you *should* still be able to log in to your B3 (via the `lan` port, or, if available, over WiFi). You can then specify appropriate networking settings in `/etc/conf.d/net` for the `wan` port (`eth0`). Having done so, ensure the `wan` port is connected, and issue (as root) `/etc/init.d/net.eth0 restart` to bring the interface up.
 

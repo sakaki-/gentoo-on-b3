@@ -18,6 +18,12 @@ CONSOLE="console=ttyS0,115200n8 earlyprintk"
 INITRAMFS="/boot/initramfs-linux.img"
 DTB="/boot/kirkwood-b3.dtb"
 
+echo "Ensuring Ethernet NICs are preserved..."
+# set temporary spoof addresses, see
+# https://forum.excito.com/viewtopic.php?p=28845#p28845
+ifconfig eth0 10.250.251.252 netmask 255.255.255.255
+ifconfig eth1 10.250.251.253 netmask 255.255.255.255
+
 # use the patched DTB, if provided
 if [ -f "/boot/kirkwood-b3-earlyled.dtb" ]; then
     DTB="/boot/kirkwood-b3-earlyled.dtb"
